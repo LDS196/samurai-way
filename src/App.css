@@ -9,22 +9,4 @@
     /*grid-gap: 10px;*/
 }
 
-.header{
-    grid-area: header;
-    background-color: antiquewhite;
-}
-.header__logo{
-    width:50px;
-}
-.nav{
-    grid-area: nav;
-    background-color: antiquewhite;
-}
-.content{
-    grid-area: content;
-    background-color: coral;
-}
-.content__img{
-    width: 100%;
-    height: 200px;
-}
+
