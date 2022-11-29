@@ -1,0 +1,9 @@
+
+.content__img{
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+.wrapper{
+    padding: 10px;
+}
