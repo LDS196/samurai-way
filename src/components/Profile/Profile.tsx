@@ -4,11 +4,12 @@ import MyPosts from "./MyPosts/Posts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 
-function Profile() {
+function Profile(props: any) {
+
     return (
         <div>
-            <ProfileInfo/>
-            <MyPosts/>
+            <ProfileInfo />
+            <MyPosts posts={props.state.posts} addPost={props.addPost}/>
         </div>
     )
 }

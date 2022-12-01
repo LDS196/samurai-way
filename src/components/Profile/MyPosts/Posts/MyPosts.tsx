@@ -2,22 +2,26 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import Post from "../Post/Post";
 
+function MyPosts(props: any) {
+    let postsElements = props.posts.map((post: { message: string; likesCount: number; }) => <Post message={post.message}
+                                                                                                  likeCount={post.likesCount}/>)
 
-function MyPosts() {
-    let posts = [
-        {id: 1, message: 'How are you', likesCount: 12},
-        {id: 2, message: "What's your name", likesCount: 10},
-    ];
+    let newPostElement: any = React.createRef();
 
-    let postsElements = posts.map(post => <Post message={post.message} likeCount={post.likesCount}/> )
-
+    let addPost: any = () => {
+        debugger;
+         let text: any = newPostElement.current.value;
+            props.addPost(text)
+    }
     return (
         <div className={s.wrapper}>
             <h3>My Post</h3>
             <div className="">
-                <div><textarea></textarea></div>
                 <div>
-                    <button>Add</button>
+                    <textarea ref={newPostElement}></textarea>
+                </div>
+                <div>
+                    <button onClick={addPost}>Add</button>
                 </div>
             </div>
             <div className={s.posts}>

@@ -3,9 +3,13 @@
     background-color: grey;
     padding: 20px;
 }
+.nav div:last-child{
+    margin-top: 20px;
+}
 .item {
     color: white;
     text-decoration: none;
+    margin-top: 20px;
 }
 .activeLink{
     color: gold;
