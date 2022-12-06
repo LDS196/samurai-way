@@ -1,23 +1,22 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-
 import {BrowserRouter} from "react-router-dom";
-import state, {addPost, subscribe, updateNewPostText} from "./redux/state";
+import store from "./redux/state";
 
 export let rerenderEntireTree = (state: any) => {
     ReactDOM.render(
         <BrowserRouter>
             <App state={state}
-                 addPost={addPost}
-                 updateNewPostText={updateNewPostText}
+                 dispatch={store.dispatch.bind(store)}
+                 dispatchDialog={store.dispatchDialog.bind(store)}
+
             />
         </BrowserRouter>,
         document.getElementById('root')
 
     );
 }
-rerenderEntireTree (state);
-subscribe(rerenderEntireTree)
+rerenderEntireTree (store.getState());
+store.subscribe(rerenderEntireTree)
