@@ -1,42 +1,46 @@
 import React from 'react';
-
 import s from './Dialogs.module.css';
 import DialogsItem from "./DialogsItem/DialogsItem";
 import Message from "./DialogsMessage/Message";
+import {addDialogCreator, updateNewDialogTextCreator} from "../../redux/dialogs-reducer";
 
 
+const Dialogs = (props: any) => {
+    let state = props.dialogsPage
+    let dialogsElements = state.dialogs.map((dialog: { name: string; id: number; }) => <DialogsItem key={dialog.id} name={dialog.name}
+                                                                                              id={dialog.id}/>);
+    let messagesElements = state.messages.map((message: { message: string; id: number; }) => <Message key={message.id}
+        message={message.message}/>)
 
-const Dialogs = (props:any) => {
-
-    let dialogsElements = props.state.dialogs.map( (dialog: { name: any; id: any; }) => <DialogsItem name={dialog.name} id={dialog.id}/>);
-    let messagesElements = props.state.messages.map( (message: { message: any; }) => <Message message={message.message}/> )
-
-    let newDialogElement: any = React.createRef()
+    let newDialogElement = state.newDialogText
 
     let addDialog: any = () => {
-        let text: any = newDialogElement.current.value;
-        props.dispatchDialog({type: 'ADD-DIALOG'})
-
+        props.addDialog()
     }
-    let onDialogChange = () =>{
-        let text: any = newDialogElement.current.value
-        props.dispatchDialog({type: 'UPDATE-NEW-DIALOG-TEXT', text})
+    let onDialogChange = (e: any) => {
+        let text: string = e.target.value
+        props.updateNewMassageText(text)
 
     }
 
     return (<div>
-        <div className={s.dialogs}>
-            <div className={s.dialogs__items}>
-                {dialogsElements}
+            <div className={s.dialogs}>
+                <div className={s.dialogs__items}>
+                    {dialogsElements}
+                </div>
+                <div className={s.dialogs__messages}>
+                    {messagesElements}
+                </div>
             </div>
-            <div className={s.dialogs__messages}>
-                {messagesElements}
-            </div>
-        </div>
-            <textarea ref={newDialogElement} onChange={onDialogChange}
-                      value={props.state.newDialogText}></textarea>
+            <textarea
+                onChange={onDialogChange}
+                value={newDialogElement}
+                placeholder='Enter your message'
+            >
+
+            </textarea>
             <button onClick={addDialog}>Add Dialog</button>
-    </div>
+        </div>
 
 
     )
