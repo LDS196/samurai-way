@@ -3,33 +3,54 @@ import style from './users.module.css';
 import axios from "axios";
 import userPhoto from '../../assets/img/user.png'
 
-const Users = (props:any) => {
+class Users extends React.Component<any, any> {
 
-    if(props.users.length === 0){
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response =>{
-            props.setUsers((response.data.items))
-        } )
-        // props.setUsers([
-        //     {id: 1, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/40/%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9_%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%BD%D0%B0_%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%D0%B5_%D0%93%D0%BE%D0%BB%D0%BE%D1%81._%D0%94%D0%B5%D1%82%D0%B8_5_%28cropped%29.jpg', followed: false, fullName: 'Dmitrii', status: "Boss", location: {city: "Dubai", country: "UAE",}},
-        //     {id: 2, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/40/%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9_%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%BD%D0%B0_%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%D0%B5_%D0%93%D0%BE%D0%BB%D0%BE%D1%81._%D0%94%D0%B5%D1%82%D0%B8_5_%28cropped%29.jpg', followed: true, fullName: 'Vasya', status: "Boss", location: {city: "Moscow", country: "Russian",}},
-        //     {id: 3, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/40/%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9_%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%BD%D0%B0_%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%D0%B5_%D0%93%D0%BE%D0%BB%D0%BE%D1%81._%D0%94%D0%B5%D1%82%D0%B8_5_%28cropped%29.jpg', followed: false, fullName: 'Nika', status: "Boss", location: {city: "Ukraine", country: "Ukraine",}},
-        //     {id: 4, photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/40/%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9_%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%BD%D0%B0_%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%D0%B5_%D0%93%D0%BE%D0%BB%D0%BE%D1%81._%D0%94%D0%B5%D1%82%D0%B8_5_%28cropped%29.jpg', followed: false, fullName: 'Peter', status: "Boss", location: {city: "Abu Dhabi", country: "UAE",}},
-        // ])
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+                this.props.setTotalUsersCount(response.data.totalCount)
+            })
+    };
+
+    onPageChanged = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setUsers(response.data.items)
+
+            })
     }
 
-    return (
-        <div>
-            {props.users.map((u:any) => <div key={u.id}>
+    render() {
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+        return (
+            <div>
+                {pages.map(p => <span key={p} className={this.props.currentPage === p ? style.selectedPage : ''}
+                                      onClick={(e) => {
+                                          this.onPageChanged(p)
+                                      }}>{p}</span>)}
+
+                {this.props.users.map((u: any) =>
+                    <div key={u.id}>
                 <span>
                     <div>
-                        <img src={u.photos.small!= null? u.photos.small: userPhoto} alt="Avatar" className={style.userPhoto}/>
+                        <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="Avatar"
+                             className={style.userPhoto}/>
                     </div>
                     <div>
-                        {u.followed?<button onClick={()=>{
-                            props.unfollow(u.id)}}>Follow</button>:<button onClick={()=>{props.follow(u.id)}}>Unfollow</button>}
+                        {u.followed ? <button onClick={() => {
+                            this.props.unfollow(u.id)
+                        }}>Follow</button> : <button onClick={() => {
+                            this.props.follow(u.id)
+                        }}>Unfollow</button>}
                     </div>
                 </span>
-                <span>
+                        <span>
                     <span>
                         <div>{u.name}</div>
                         <div>{u.status}</div>
@@ -39,9 +60,10 @@ const Users = (props:any) => {
                         <div>{'u.location.city'}</div>
                     </span>
                 </span>
-            </div>)}
-        </div>
-    );
-};
+                    </div>)}
+            </div>
+        );
+    }
+}
 
 export default Users;

@@ -20,6 +20,9 @@ function Navbar(props: any) {
             <div>
                 <NavLink className={s.item} activeClassName={s.activeLink} to="/Settings">Settings</NavLink>
             </div>
+            <div>
+                <NavLink className={s.item} activeClassName={s.activeLink} to="/Users">Users</NavLink>
+            </div>
         </nav>
     )
 }
