@@ -1,10 +1,16 @@
 import React from 'react';
 import s from './MyPosts.module.css'
 import Post from "../Post/Post";
+import {PostType} from "../../../../redux/profile-reducer";
 
 
-
-function MyPosts(props: any) {
+type MyPostsType={
+    posts: Array<PostType>
+    newPostText: string
+    addPost:()=>void
+    updateNewPostText:(text:string)=>void
+}
+function MyPosts(props: MyPostsType) {
     let postsElements = props.posts.map((post: {id:number; message: string; likesCount: number; }) => <Post key={post.id} message={post.message} likeCount={post.likesCount}/>)
 
     let newPostElement: any = React.createRef();

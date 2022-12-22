@@ -1,10 +1,11 @@
 import {combineReducers, createStore} from "redux";
-import profileReducer from "./profile-reducer";
+import profileReducer, {PostStateType} from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
 import friendsReducer from "./friends-reducer";
 import usersReducer, {UsersType} from "./users-reducer";
+
 export type StateType={
-    // profilePage:
+     profilePage:PostStateType
     // dialogsPage:
     // friendsData:
     usersPage: UsersType
