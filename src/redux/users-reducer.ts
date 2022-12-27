@@ -17,7 +17,7 @@ export type UserType = {
     status: null
     followed: boolean
 }
-export type UsersType = {
+export type UsersType = {  //for state
     users: Array<UserType>
     pageSize: number,
     totalUsersCount: number,
@@ -77,7 +77,7 @@ const usersReducer = (state: UsersType = initialState, action: ActionType) => {
 };
 export const follow = (id: number) => ({type: FOLLOW, id});
 export const unfollow = (id: number) => ({type: UNFOLLOW, id});
-export const setUsers = (users: UsersType) => ({type: SET_USERS, users});
+export const setUsers = (users: UserType[]) => ({type: SET_USERS, users});
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage});
 export const setTotalUsersCount = (totalCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalCount});
 export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching});
