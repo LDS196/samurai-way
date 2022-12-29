@@ -13,13 +13,6 @@ export const getUsers = (currentPage:number = 1,pageSize:number= 10) =>{
 }
 
 
-//
-// export const getUsers = (currentPage:number = 1,pageSize:number= 10) : Promise<{items: UserType[], totalCount: number}> =>{
-//     return axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`,{
-//         withCredentials:true
-//     }).then(res => res.data)
-// }
-
 export const unfollowUser = (id:number)=>{
     return instance.post(`follow/${id}`, {}, )
          .then(res=> res.data)
