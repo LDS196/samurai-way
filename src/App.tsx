@@ -11,20 +11,19 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 
 
-
 function App() {
     return (
         <div className="app-wrapper">
             <HeaderContainer/>
-            <Navbar />
+            <Navbar/>
             <div className="app-wrapper-content">
-                <Route path='/dialogs' render={() => <DialogsContainer />}/>
-                <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
+                <Route path='/dialogs' render={() => <DialogsContainer/>}/>
+                <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                 <Route path='/news' component={News}/>
                 <Route path='/music' component={Music}/>
                 <Route path='/settings' component={Settings}/>
                 <Route path='/users'
-                       render={() => <UsersContainer />}/>
+                       render={() => < UsersContainer/>}/>
             </div>
         </div>
     );
