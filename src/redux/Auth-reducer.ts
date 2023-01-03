@@ -1,12 +1,14 @@
+import {authAPI} from "../components/api/api";
+
 const SET_USERS_DATA: string = "SET_USERS_DATA";
 export type AuthActionType = {
     type: string
     data: DataType
 }
-export type DataType={
-    id:number
-    email:string
-    login:string
+export type DataType = {
+    id: number
+    email: string
+    login: string
 }
 export type AuthUserType = {
     id: number | null
@@ -37,5 +39,15 @@ export const setAuthUserData = (id: number, email: string, login: string,) => ({
     type: SET_USERS_DATA,
     data: {id, email, login}
 });
+
+
+export const getAuthUserData = () => (dispatch: ({}) => void) => {
+    authAPI.me().then(response => {
+        if (response.data.resultCode === 0) {
+            let {id, login, email} = response.data.data
+            dispatch(setAuthUserData(id, email, login))
+        }
+    })
+}
 
 export default AuthReducer;

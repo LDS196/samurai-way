@@ -19,18 +19,15 @@ export const usersAPI = {
     followUser(id:number){
         return instance.delete(`follow/${id}`).then(res=> res.data)
     },
+    getProfile(id:number | string){
+        return instance.get(`profile/${id}`);
+
+    }
 
 }
+export const authAPI = {
+me(){
+    return instance.get(`auth/me`)
+}
 
-// export const unfollowUser = (id:number)=>{
-//     return instance.post(`follow/${id}`, {}, )
-//          .then(res=> res.data)
-// };
-// export const followUser = (id:number)=>{
-//     return instance.delete(`follow/${id}`)
-//         .then(res=> res.data)
-// };
-// export const getUsers = (currentPage:number = 1,pageSize:number= 10) =>{
-//     return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-//         .then(res=> res.data)
-// }
+}
