@@ -1,13 +1,13 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import profileReducer, {PostStateType} from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
+import dialogsReducer, {DialogsPageType} from "./dialogs-reducer";
 import friendsReducer from "./friends-reducer";
 import usersReducer, {UsersType} from "./users-reducer";
 import AuthReducer, {AuthUserType} from "./Auth-reducer";
 import thunkMiddleware from "redux-thunk";
 export type StateType={
      profilePage:PostStateType
-    // dialogsPage:
+     dialogsPage: DialogsPageType
     // friendsData:
     usersPage: UsersType
     auth: AuthUserType

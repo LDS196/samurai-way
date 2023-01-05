@@ -3,7 +3,7 @@ import {authAPI} from "../components/api/api";
 const SET_USERS_DATA: string = "SET_USERS_DATA";
 export type AuthActionType = {
     type: string
-    data: DataType
+    data?: DataType
 }
 export type DataType = {
     id: number
@@ -41,7 +41,7 @@ export const setAuthUserData = (id: number, email: string, login: string,) => ({
 });
 
 
-export const getAuthUserData = () => (dispatch: ({}) => void) => {
+export const getAuthUserData = () => (dispatch: (a:AuthActionType) => void) => {
     authAPI.me().then(response => {
         if (response.data.resultCode === 0) {
             let {id, login, email} = response.data.data

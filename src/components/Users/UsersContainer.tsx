@@ -9,6 +9,7 @@ import Users from "./Users";
 
 import Preloader from "../common/Preloader/Preloader";
 import {StateType} from "../../redux/redux-store";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 
 type UsersContainerType = UsersType & {
@@ -22,13 +23,7 @@ class UsersContainer extends React.Component<UsersContainerType> {
 
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
-        // this.props.toggleIsFetching(true);
-        //
-        // getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-        //     this.props.toggleIsFetching(false);
-        //     this.props.setUsers(data.items);
-        //     this.props.setTotalUsersCount(data.totalCount);
-        // })
+
     };
 
     onPageChanged = (pageNumber: number) => {
@@ -92,7 +87,8 @@ let mapStateToProps = (state: StateType) => {
 //         }
 //     }
 // }
+let withRedirect = WithAuthRedirect(UsersContainer)
 
 export default connect(mapStateToProps, {
     follow, unfollow, setCurrentPage, getUsers,
-})(UsersContainer);
+})(withRedirect);

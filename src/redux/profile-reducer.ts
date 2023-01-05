@@ -46,8 +46,8 @@ const initialState: PostStateType = {
 }
 type ActionType = {
     type: string
-    newText: string
-    profile: ProfileType
+    newText?: string
+    profile?: ProfileType
 }
 const profileReducer = (state: PostStateType = initialState, action: ActionType) => {
     switch (action.type) {
@@ -80,7 +80,7 @@ export const updateNewPostTextActionCreator = (text: string) =>
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile});
 
 
-export const getUserProfile = (userId: number|string) => (dispatch:any)=>{
+export const getUserProfile = (userId: number|string) => (dispatch:(a:ActionType)=>void)=>{
     usersAPI.getProfile(userId).then(response => {
        dispatch(setUserProfile(response.data));
     })
