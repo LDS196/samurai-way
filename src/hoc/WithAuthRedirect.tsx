@@ -15,8 +15,6 @@ export function WithAuthRedirect<T>(Component: ComponentType<T>) {
 
         render() {
             const {isAuth, ...restProps} = this.props
-            console.log(this.props)
-
             if (!isAuth) return <Redirect to={'/login'}/>
             return <Component{...restProps as T}/>
         }
@@ -26,4 +24,3 @@ export function WithAuthRedirect<T>(Component: ComponentType<T>) {
     return ConnectedAuthRedirectComponent;
 };
 
-// !this.props.isAuth

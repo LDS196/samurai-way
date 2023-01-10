@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 
 import {StateType} from "../../redux/redux-store";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 
 let mapStateToProps = (state: StateType) => {
@@ -17,7 +18,7 @@ let mapStateToProps = (state: StateType) => {
 
     }
 }
-let mapDispatchToProps = (dispatch:(a:ActionDialogsType)=>void) => {
+let mapDispatchToProps = (dispatch: (a: ActionDialogsType) => void) => {
     return {
         updateNewMassageText: (text: string) => {
             dispatch(updateNewDialogTextCreator(text))
@@ -27,9 +28,16 @@ let mapDispatchToProps = (dispatch:(a:ActionDialogsType)=>void) => {
         }
     }
 }
+compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(Dialogs)
 
- let AuthRedirectComponent = WithAuthRedirect(Dialogs)
+// let AuthRedirectComponent = WithAuthRedirect(Dialogs)
+//
+// const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
-
-export default DialogsContainer;
+export default compose<React.FC>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(Dialogs)
