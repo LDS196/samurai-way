@@ -14,16 +14,26 @@ export const usersAPI = {
             .then(res=> res.data)
     },
     unfollowUser (id:number){
-        return instance.post(`follow/${id}`, {}, ).then(res=> res.data)
+        return instance.delete(`follow/${id}`, {}, ).then(res=> res.data)
     },
     followUser(id:number){
-        return instance.delete(`follow/${id}`).then(res=> res.data)
+        return instance.post(`follow/${id}`).then(res=> res.data)
     },
-    getProfile(id:number | string){
-        return instance.get(`profile/${id}`);
-
+    getProfile(id:number| string ){
+        console.log('Obsolete method')
+        return profileAPI.getProfile(id)
     }
-
+}
+export const profileAPI = {
+    getProfile(id:number| string){
+        return instance.get(`profile/${id}`);
+    },
+    getStatus(id:number| string){
+        return instance.get(`profile/status/${id}`);
+    },
+    updateStatus(status: string){
+        return instance.put(`profile/status/`,{status:status});
+    }
 }
 export const authAPI = {
 me(){

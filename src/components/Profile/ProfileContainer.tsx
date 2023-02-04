@@ -1,10 +1,8 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getUserProfile, ProfileType} from "../../redux/profile-reducer";
+import {getStatus, getUserProfile, ProfileType, updateStatus} from "../../redux/profile-reducer";
 import {StateType} from "../../redux/redux-store";
-
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 import {useParams} from "react-router-dom";
 
@@ -15,11 +13,14 @@ type MatchType = {
     params: ParamsType
 }
 type ProfileContainerType = {
+    getStatus:(userId: number|string)=>void
     getUserProfile:(userId: number|string)=>void
     profile: ProfileType | null
     setUserProfile: (profile: ProfileType) => { type: string, profile: ProfileType }
     match: MatchType
     isAuth: boolean
+    status:string
+    updateStatus:(status:string)=>void
 }
 
 export function withRouter(Children: any) {
@@ -34,9 +35,10 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '2';
+            userId = '27222';
         }
         this.props.getUserProfile(userId)
+        this.props.getStatus(userId)
     }
 
 
@@ -44,18 +46,19 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
 
         return (
             <div>
-                <Profile profile={this.props.profile}/>
+                <Profile profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
             </div>
         )
     }
 }
 let mapStateToProps = (state: StateType) => ({
     profile: state.profilePage.profile,
+    status:state.profilePage.status
 })
 export default compose<React.FC>(
-    connect(mapStateToProps, {getUserProfile}),
+    connect(mapStateToProps, {getUserProfile,getStatus, updateStatus}),
     withRouter,
-    WithAuthRedirect
+    // WithAuthRedirect
 )(ProfileContainer)
 
 // let AuthRedirectComponent= WithAuthRedirect(ProfileContainer)
