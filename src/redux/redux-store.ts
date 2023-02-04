@@ -5,6 +5,7 @@ import friendsReducer from "./friends-reducer";
 import usersReducer, {UsersType} from "./users-reducer";
 import AuthReducer, {AuthUserType} from "./Auth-reducer";
 import thunkMiddleware from "redux-thunk";
+import { reducer as formReducer } from 'redux-form'
 export type StateType={
      profilePage:PostStateType
      dialogsPage: DialogsPageType
@@ -18,9 +19,9 @@ let reducers = combineReducers({
     dialogsPage: dialogsReducer,
     friendsData: friendsReducer,
     usersPage: usersReducer,
-    auth: AuthReducer
+    auth: AuthReducer,
+    form: formReducer
 });
 let store = createStore(reducers,applyMiddleware(thunkMiddleware));
-
 
 export default store;
