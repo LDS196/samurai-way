@@ -1,7 +1,6 @@
 import {profileAPI, usersAPI} from "../components/api/api";
 
 const ADD_POST: string = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT: string = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE: string = 'SET_USER_PROFILE';
 const SET_STATUS: string = 'SET_STATUS:';
 type PhotosType = {
@@ -34,7 +33,6 @@ export type PostType = {
 type PostsType = Array<PostType>;
 export type PostStateType = {
     posts: PostsType
-    newPostText: string
     profile: ProfileType | null
     status: string
 }
@@ -43,7 +41,6 @@ const initialState: PostStateType = {
         {id: 1, message: 'How are you', likesCount: 12},
         {id: 2, message: 'HI Friends', likesCount: 12},
     ],
-    newPostText: 'new post',
     profile: null,
     status: ''
 }
@@ -52,24 +49,20 @@ type ActionType = {
     newText?: string
     profile?: ProfileType
     status?: string
+    value?:string
 }
 const profileReducer = (state: PostStateType = initialState, action: ActionType) => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
                 id: 5,
-                message: state.newPostText,
+                message: action.value,
                 likesCount: 0
             };
             return {
                 ...state,
                 posts: [...state.posts, newPost],
                 newPostText: ''
-            }
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
             }
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
@@ -81,9 +74,7 @@ const profileReducer = (state: PostStateType = initialState, action: ActionType)
             return state;
     }
 };
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const updateNewPostTextActionCreator = (text: string) =>
-    ({type: UPDATE_NEW_POST_TEXT, newText: text});
+export const addPostActionCreator = (value:string) => ({type: ADD_POST, value});
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile});
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status});
 

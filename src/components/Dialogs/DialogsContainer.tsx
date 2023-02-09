@@ -2,7 +2,6 @@ import React from 'react';
 import {
     ActionDialogsType,
     addDialogCreator,
-    updateNewDialogTextCreator
 } from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
@@ -20,11 +19,8 @@ let mapStateToProps = (state: StateType) => {
 }
 let mapDispatchToProps = (dispatch: (a: ActionDialogsType) => void) => {
     return {
-        updateNewMassageText: (text: string) => {
-            dispatch(updateNewDialogTextCreator(text))
-        },
-        addDialog: () => {
-            dispatch(addDialogCreator())
+        addDialog: (newMessageBody:string) => {
+            dispatch(addDialogCreator(newMessageBody))
         }
     }
 }
