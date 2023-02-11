@@ -4,7 +4,7 @@ import DialogsItem from "./DialogsItem/DialogsItem";
 import Message from "./DialogsMessage/Message";
 
 import {DialogsPageType} from "../../redux/dialogs-reducer";
-import {Field, reduxForm} from "redux-form";
+import AddMessageForm from "./DialogsMessage/AddMessageForm";
 
 export type DialogsType = {
     addDialog: (value: string) => void
@@ -34,7 +34,7 @@ const Dialogs = (props: DialogsType) => {
                     {messagesElements}
                 </div>
             </div>
-            <AddMessageFormRedux onSubmit={addNewMessage}/>
+            <AddMessageForm onSubmit={addNewMessage}/>
         </div>
 
 
@@ -43,16 +43,3 @@ const Dialogs = (props: DialogsType) => {
 
 export default Dialogs;
 
-const AddMessageForm = (props: any) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={'textarea'} name={'NewMessageBody'} placeholder={'Enter your message'}/>
-                <div>
-                    <button>Add Dialog</button>
-                </div>
-            </div>
-        </form>
-    )
-}
-const AddMessageFormRedux = reduxForm({form: ' AddMessageForm'})(AddMessageForm)
