@@ -6,14 +6,11 @@ import {
     unfollow, UsersType,
 } from "../../redux/users-reducer";
 import Users from "./Users";
-
 import Preloader from "../common/Preloader/Preloader";
 import {StateType} from "../../redux/redux-store";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 import {
     getCurrentPageSelector, getFollowingInProgressSelector, getIsFetchingSelector,
-
     getPageSizeSelector,
     getTotalUsersCountSelector,
     getUsersSelector
