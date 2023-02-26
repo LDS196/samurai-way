@@ -6,12 +6,14 @@ import usersReducer, {UsersType} from "./users-reducer";
 import AuthReducer, {AuthUserType} from "./Auth-reducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
+import AppReducer, {initialAppStateType} from "./App-reducer";
 export type StateType={
      profilePage:PostStateType
      dialogsPage: DialogsPageType
     // friendsData:
     usersPage: UsersType
     auth: AuthUserType
+    app: initialAppStateType
 
 }
 let reducers = combineReducers({
@@ -20,7 +22,8 @@ let reducers = combineReducers({
     friendsData: friendsReducer,
     usersPage: usersReducer,
     auth: AuthReducer,
-    form: formReducer
+    form: formReducer,
+    app: AppReducer
 });
 let store = createStore(reducers,applyMiddleware(thunkMiddleware));
 

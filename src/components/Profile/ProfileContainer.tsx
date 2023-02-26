@@ -5,6 +5,7 @@ import {getStatus, getUserProfile, ProfileType, updateStatus} from "../../redux/
 import {StateType} from "../../redux/redux-store";
 import {compose} from "redux";
 import {useParams} from "react-router-dom";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 type ParamsType = {
     userId: string
@@ -21,6 +22,8 @@ type ProfileContainerType = {
     isAuth: boolean
     status:string
     updateStatus:(status:string)=>void
+    authorizedUserId: number
+
 }
 
 export function withRouter(Children: any) {
@@ -33,9 +36,12 @@ export function withRouter(Children: any) {
 class ProfileContainer extends React.Component<ProfileContainerType> {
 
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        let userId = +this.props.match.params.userId
         if (!userId) {
-            userId = '27222';
+            userId = this.props.authorizedUserId;
+            if(!userId) {
+                console.log(this.props)
+            }
         }
         this.props.getUserProfile(userId)
         this.props.getStatus(userId)
@@ -53,12 +59,14 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
 }
 let mapStateToProps = (state: StateType) => ({
     profile: state.profilePage.profile,
-    status:state.profilePage.status
+    status:state.profilePage.status,
+    authorizedUserId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 export default compose<React.FC>(
     connect(mapStateToProps, {getUserProfile,getStatus, updateStatus}),
     withRouter,
-    // WithAuthRedirect
+     WithAuthRedirect
 )(ProfileContainer)
 
 // let AuthRedirectComponent= WithAuthRedirect(ProfileContainer)

@@ -95,6 +95,6 @@ let mapStateToProps = (state: StateType) => {
 // })(withRedirect);
 
 export default compose<React.FC>(
-    WithAuthRedirect,
+    // WithAuthRedirect,
     connect(mapStateToProps, {follow, unfollow, setCurrentPage, getUsers,})
 )(UsersContainer)
