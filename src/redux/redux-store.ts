@@ -4,11 +4,12 @@ import dialogsReducer, {DialogsPageType} from "./dialogs-reducer";
 import friendsReducer from "./friends-reducer";
 import usersReducer, {UsersType} from "./users-reducer";
 import AuthReducer, {AuthUserType} from "./Auth-reducer";
+import {composeWithDevTools} from 'redux-devtools-extension';
 import thunkMiddleware from "redux-thunk";
 import {reducer as formReducer} from 'redux-form'
 import AppReducer, {initialAppStateType} from "./App-reducer";
 
-export type StateType = {
+ export type StateType = {
     profilePage: PostStateType
     dialogsPage: DialogsPageType
     usersPage: UsersType
@@ -25,6 +26,7 @@ let reducers = combineReducers({
     form: formReducer,
     app: AppReducer
 });
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+ let store = createStore(reducers,  composeWithDevTools(applyMiddleware(thunkMiddleware)));
+
 
 export default store;
