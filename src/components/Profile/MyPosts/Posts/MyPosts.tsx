@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import s from './MyPosts.module.css'
 import Post from "../Post/Post";
 import {PostType} from "../../../../redux/profile-reducer";
@@ -12,10 +12,13 @@ type MyPostsType={
     addPost:(value:string)=>void
 
 }
-function MyPosts(props: MyPostsType) {
-    let postsElements = props.posts.map((post: {id:number; message: string; likesCount: number; }) => <Post key={post.id} message={post.message} likeCount={post.likesCount}/>)
 
-    let onAddPost = (values:any) => {
+const MyPosts = memo((props: MyPostsType) => {
+    console.log('Render')
+    let postsElements = props.posts.map((post: { id: number; message: string; likesCount: number; }) => <Post
+        key={post.id} message={post.message} likeCount={post.likesCount}/>)
+
+    let onAddPost = (values: any) => {
         props.addPost(values.newPost)
     };
 
@@ -30,7 +33,7 @@ function MyPosts(props: MyPostsType) {
             </div>
         </div>
     )
-}
+});
 
 export default MyPosts;
 
