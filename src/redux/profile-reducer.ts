@@ -1,22 +1,27 @@
 import {profileAPI, usersAPI} from "../components/api/api";
-const DELETE_POST="profile-reducer/DELETE_POST"
+
+const DELETE_POST = "profile-reducer/DELETE_POST"
 const ADD_POST: string = 'profile-reducer/ADD-POST';
-const SET_USER_PROFILE: string = 'SET_USER_PROFILE';
-const SET_STATUS: string = 'SET_STATUS:';
+const SET_USER_PROFILE: string = 'profile-reducer/SET_USER_PROFILE';
+const SET_STATUS: string = 'profile-reducer/SET_STATUS:';
+const SAVE_PHOTO: string = 'profile-reducer/SAVE_PHOTO:';
 type PhotosType = {
     small: string
     large: string
 }
 type ContactsType = {
     facebook: string
-    website: null,
+    website: string
     vk: string
     twitter: string
     instagram: string
-    youtube: null,
+    youtube: string
     github: string
-    mainLink: null
+    mainLink: string
 }
+
+export type ContactsKey = keyof ContactsType
+
 export type ProfileType = {
     aboutMe: string,
     contacts: ContactsType
@@ -49,8 +54,9 @@ type ActionType = {
     newText?: string
     profile?: ProfileType
     status?: string
-    value?:string
-    id?:number
+    value?: string
+    id?: number
+    photos?:any
 }
 const profileReducer = (state: PostStateType = initialState, action: ActionType) => {
     switch (action.type) {
@@ -71,36 +77,61 @@ const profileReducer = (state: PostStateType = initialState, action: ActionType)
         case SET_STATUS: {
             return {...state, status: action.status}
         }
-        case DELETE_POST:{
+        case DELETE_POST: {
             return {
-                ...state,posts: state.posts.filter(p=> p.id!==action.id)
+                ...state, posts: state.posts.filter(p => p.id !== action.id)
+            }
+        }
+        case SAVE_PHOTO: {
+
+            return {
+                ...state,profile:{...state.profile, photos:action.photos}
             }
         }
         default:
             return state;
     }
 };
-export const addPostActionCreator = (value:string) => ({type: ADD_POST, value});
+export const addPostActionCreator = (value: string) => ({type: ADD_POST, value});
 export const setUserProfile = (profile: ProfileType) => ({type: SET_USER_PROFILE, profile});
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status});
-export const deletePostActionCreator=(id:number)=>({type:DELETE_POST,id})
+export const deletePostActionCreator = (id: number) => ({type: DELETE_POST, id})
+export const savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO, photos})
 
 export const getUserProfile = (userId: number | string) => async (dispatch: (a: ActionType) => void) => {
     const response = await usersAPI.getProfile(userId)
-        dispatch(setUserProfile(response.data));
+    dispatch(setUserProfile(response.data));
 }
 export const getStatus = (userId: number | string) => {
     return async (dispatch: (a: ActionType) => void) => {
         const res = await profileAPI.getStatus(userId)
+
         dispatch(setStatusAC(res.data))
     }
 }
-export const updateStatus = (status:string) => {
+export const updateStatus = (status: string) => {
     return async (dispatch: (a: ActionType) => void) => {
         const res = await profileAPI.updateStatus(status)
-            if(res.data.resultCode===0) {
-                dispatch(setStatusAC(status))
-            }
+        if (res.data.resultCode === 0) {
+            dispatch(setStatusAC(status))
+        }
     }
 }
+export const savePhoto = (file: any) => {
+    console.log('photo')
+    return async (dispatch: (a: ActionType) => void) => {
+        const res = await profileAPI.savePhoto(file)
+        if (res.data.resultCode === 0) {
+            dispatch(savePhotoSuccess(res.data.data.photos))
+        }
+    }
+}
+export const saveProfile = (formData: any) => async (dispatch: any) => {
+        const res = await profileAPI.saveProfile(formData)
+
+        if (res.data.resultCode === 0) {
+
+            // dispatch()
+        }
+    }
 export default profileReducer;

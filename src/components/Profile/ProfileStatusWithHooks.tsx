@@ -29,7 +29,7 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({status, updateStat
                         <input onChange={onStatusChange} value={tempStatus} onBlur={deactivateEditMode}
                                autoFocus={true}></input>
                     </div>
-                    : <div>
+                    : <div>My status:
                         <span onDoubleClick={activateEditMode}>{tempStatus || 'No status'}</span>
                     </div>
             }

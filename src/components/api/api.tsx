@@ -32,17 +32,40 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return instance.put(`profile/status/`, {status: status});
+    },
+    savePhoto(file: any) {
+
+        const formData = new FormData()
+        formData.append('image', file)
+        return instance.put(`profile/photo/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    },
+    saveProfile(profile: any) {
+
+        return instance.put(`profile`, profile);
     }
 }
 export const authAPI = {
     me() {
         return instance.get(`auth/me`);
     },
-    login(email:string,password:string,rememberMe:boolean=false) {
+    login(email: string, password: string, rememberMe: boolean = false) {
         return instance.post(`auth/login`, {email, password, rememberMe});
     },
     logout() {
         return instance.delete(`auth/login`);
     }
 
+}
+const prof = {
+    aboutMe: 'fffffffffffff',
+    contacts: {},
+    lookingForAJob: true,
+    lookingForAJobDescription: 'ffffffff',
+    fullName: 'fffffffff',
+    userId: 'dddddddd',
+    photos: {}
 }

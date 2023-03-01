@@ -14,7 +14,7 @@ type MyPostsType={
 }
 
 const MyPosts = memo((props: MyPostsType) => {
-    console.log('Render')
+
     let postsElements = props.posts.map((post: { id: number; message: string; likesCount: number; }) => <Post
         key={post.id} message={post.message} likeCount={post.likesCount}/>)
 
