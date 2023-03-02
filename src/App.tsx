@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
-import {Route, withRouter} from "react-router-dom";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -36,6 +36,7 @@ class App extends React.Component<AppType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
+                    <Switch>
                     <Route path='/dialogs' render={withSuspense(DialogsContainer)}/>
                     <Route path='/profile/:userId?' render={withSuspense(ProfileContainer)}/>
                     <Route path='/news' component={News}/>
@@ -43,7 +44,9 @@ class App extends React.Component<AppType> {
                     <Route path='/settings' component={Settings}/>
                     <Route path='/users' render={() => < UsersContainer/>}/>
                     <Route path='/login' render={() => < Login/>}/>
-
+                    <Route path='*' render={() => <div>404 Not Found</div>} />
+                        <Redirect from="/" to="/profile" />
+                    </Switch>
                 </div>
             </div>
         );

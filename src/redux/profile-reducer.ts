@@ -1,4 +1,5 @@
 import {profileAPI, usersAPI} from "../components/api/api";
+import {stopSubmit} from "redux-form";
 
 const DELETE_POST = "profile-reducer/DELETE_POST"
 const ADD_POST: string = 'profile-reducer/ADD-POST';
@@ -56,7 +57,7 @@ type ActionType = {
     status?: string
     value?: string
     id?: number
-    photos?:any
+    photos?: any
 }
 const profileReducer = (state: PostStateType = initialState, action: ActionType) => {
     switch (action.type) {
@@ -85,7 +86,7 @@ const profileReducer = (state: PostStateType = initialState, action: ActionType)
         case SAVE_PHOTO: {
 
             return {
-                ...state,profile:{...state.profile, photos:action.photos}
+                ...state, profile: {...state.profile, photos: action.photos}
             }
         }
         default:
@@ -109,16 +110,18 @@ export const getStatus = (userId: number | string) => {
         dispatch(setStatusAC(res.data))
     }
 }
-export const updateStatus = (status: string) => {
-    return async (dispatch: (a: ActionType) => void) => {
+export const updateStatus = (status: string) => async (dispatch: (a: ActionType) => void) => {
+    try {
         const res = await profileAPI.updateStatus(status)
         if (res.data.resultCode === 0) {
             dispatch(setStatusAC(status))
         }
+    } catch(error) {
+
     }
+
 }
 export const savePhoto = (file: any) => {
-    console.log('photo')
     return async (dispatch: (a: ActionType) => void) => {
         const res = await profileAPI.savePhoto(file)
         if (res.data.resultCode === 0) {
@@ -126,12 +129,16 @@ export const savePhoto = (file: any) => {
         }
     }
 }
-export const saveProfile = (formData: any) => async (dispatch: any) => {
-        const res = await profileAPI.saveProfile(formData)
-
-        if (res.data.resultCode === 0) {
-
-            // dispatch()
-        }
+export const saveProfile = (formData: any) => async (dispatch: any, getSate: any) => {
+    const userId = getSate().auth.id
+    const response = await profileAPI.saveProfile(formData)
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfile(userId))
+    } else {
+        let name = response.data.messages[0].split('>')[1].toLowerCase()
+        name = name.substr(0, (name.length - 1))
+        dispatch(stopSubmit('edit-profile', {'contacts': {[name]: response.data.messages[0]}}))
+        return Promise.reject(response.data.messages[0])
     }
+}
 export default profileReducer;

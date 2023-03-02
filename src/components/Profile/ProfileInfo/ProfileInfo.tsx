@@ -4,7 +4,7 @@ import Preloader from "../../common/Preloader/Preloader";
 
 import ProfileStatusWithHooks from "../ProfileStatusWithHooks";
 import userPhoto from "../../../assets/img/user.png";
-import {ContactsKey, ProfileType, saveProfile} from "../../../redux/profile-reducer";
+import {ContactsKey, ProfileType,} from "../../../redux/profile-reducer";
 
 import ProfileDataFormReduxForm from "./ProfileDataForm";
 
@@ -35,9 +35,11 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
             props.savePhoto(e.target.files[0])
         }
     }
-    const onSubmit = (formData: any) => {
+    const onSubmit =  (formData: any) => {
+        props.saveProfile(formData).then(()=>{
+            setEditMode(false)
+        })
 
-        props.saveProfile(formData)
     }
 
     return (
@@ -50,8 +52,10 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                 {editMode
                     ?<ProfileDataFormReduxForm
+                        initialValues={props.profile}
                         profile={props.profile}
                         onSubmit={onSubmit}
+
                     />
                     :<ProfileData profile={props.profile} isOwner={props.isOwner} edit={()=>setEditMode(true)}/>
                 }
