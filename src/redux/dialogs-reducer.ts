@@ -8,18 +8,11 @@ export type DialogUserType = {
     id: number
     name: string
 };
-export type DialogsPageType = {
-    messages: Array<DialogMessageType>,
-    dialogs: Array<DialogUserType>,
 
-};
-export type ActionDialogsType = {
-    type: string
-    text?: string
-    newMessageBody?:string
-    id?:number
-}
-const initialState: DialogsPageType = {
+type AddDialogCreatorAT = ReturnType<typeof addDialogCreator>
+export type ActionDialogsType = AddDialogCreatorAT
+
+const initialState = {
     messages: [
         {id: 1, message: 'How are you',},
         {id: 2, message: 'HI Friends',},
@@ -27,7 +20,7 @@ const initialState: DialogsPageType = {
         {id: 4, message: 'How are you',},
         {id: 5, message: 'How are you',},
 
-    ],
+    ] as Array<DialogMessageType>,
     dialogs: [
         {id: 1, name: 'Viktor',},
         {id: 2, name: 'User',},
@@ -36,11 +29,12 @@ const initialState: DialogsPageType = {
         {id: 5, name: 'Olga',},
         {id: 6, name: 'Sveta',},
 
-    ],
+    ] as Array<DialogUserType>,
 
 };
+export type DialogsPageType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: ActionDialogsType) => {
+const dialogsReducer = (state = initialState, action: ActionDialogsType):DialogsPageType => {
     switch (action.type) {
         case ADD_DIALOG:
             let dialogMessage = action.newMessageBody
@@ -52,7 +46,7 @@ const dialogsReducer = (state = initialState, action: ActionDialogsType) => {
             return state;
     }
 };
-export const addDialogCreator = (newMessageBody:string) => ({type: ADD_DIALOG,newMessageBody});
+export const addDialogCreator = (newMessageBody:string) => ({type: ADD_DIALOG,newMessageBody} as const);
 
 
 export default dialogsReducer;

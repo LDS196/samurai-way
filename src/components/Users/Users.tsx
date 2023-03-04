@@ -1,7 +1,9 @@
 import React from 'react';
-import {UserType} from "../../redux/users-reducer";
+
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
+import {UserType} from "../api/usersAPI";
+
 
 
 type UsersPropsType = {
@@ -10,9 +12,9 @@ type UsersPropsType = {
     currentPage: number
     onPageChanged: (pageNumber: number) => void
     users: Array<UserType>
-    follow: (id: number) => any
-    unfollow: (id: number) => any
-    followingInProgress: []
+    follow: (id: number) => void
+    unfollow: (id: number) => void
+    followingInProgress: Array<number>
 }
 const Users = (props: UsersPropsType) => {
 

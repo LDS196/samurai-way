@@ -4,8 +4,12 @@ type ProfileStatusType = {
     status: string
     updateStatus: (status: string) => void
 }
+type StateType = {
+    editMode: boolean
+    status: string
+}
 
-class ProfileStatus extends React.Component<ProfileStatusType> {
+class ProfileStatus extends React.Component<ProfileStatusType,StateType> {
 
     state = {
         editMode: true,

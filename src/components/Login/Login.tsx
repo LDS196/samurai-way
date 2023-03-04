@@ -36,7 +36,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
             <div>
                 <Field type={"checkbox"}
                        name={'rememberMe'}
-                       component={'input'}/>remember me
+                       component={Input}/>remember me
             </div>
             <div>
                 {captchaUrl&& <img src={captchaUrl} alt="captcha"/>}
@@ -55,16 +55,20 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
     );
 };
 
-const Login = (props: any) => {
-
+type MapStatePropsType={
+    isAuth:boolean
+    captchaUrl: string|null
+}
+type MapDispatchPropsType={
+    login:(email: string, password: string, rememberMe: boolean,captcha:string)=>void
+}
+const Login:React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
     const onSubmit = (formData: FormDataType) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
-
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
     }
-
     return (
         <div>
             <h1>Login</h1>

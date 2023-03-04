@@ -42,10 +42,10 @@ class App extends React.Component<AppType> {
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={Music}/>
                     <Route path='/settings' component={Settings}/>
-                    <Route path='/users' render={() => < UsersContainer/>}/>
+                    <Route path='/users' render={() => < UsersContainer />}/>
                     <Route path='/login' render={() => < Login/>}/>
-                    <Route path='*' render={() => <div>404 Not Found</div>} />
-                        <Redirect from="/" to="/profile" />
+                    {/*<Route path='*' render={() => <div>404 Not Found</div>} />*/}
+                    {/*    <Redirect from="/" to="/profile" />*/}
                     </Switch>
                 </div>
             </div>

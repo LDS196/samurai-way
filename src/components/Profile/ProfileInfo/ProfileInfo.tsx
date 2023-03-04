@@ -1,12 +1,10 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
-
 import ProfileStatusWithHooks from "../ProfileStatusWithHooks";
 import userPhoto from "../../../assets/img/user.png";
-import {ContactsKey, ProfileType,} from "../../../redux/profile-reducer";
-
 import ProfileDataFormReduxForm from "./ProfileDataForm";
+import {ContactsKey, ProfileType} from "../../api/profileAPI";
 
 type ContactType = {
     contactTitle: string

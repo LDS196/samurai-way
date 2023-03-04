@@ -1,21 +1,20 @@
 import React from "react";
 import { Field, InjectedFormProps, reduxForm} from "redux-form";
-import {ContactsKey, ProfileType} from "../../../redux/profile-reducer";
-import {Input, TextArea} from "../../common/FormControls/FormsControls";
+import {Input, Textarea} from "../../common/FormControls/FormsControls";
 import s from "../../common/FormControls/FormsControls.module.css";
-
+import {ContactsType, ProfileType} from "../../api/profileAPI";
 
 interface ProfileDataFormType{
     profile: ProfileType
-
 }
-
 interface SubmitForm {
     fullName:string
+    aboutMe:string
+    contacts: ContactsType
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
 }
-
- const ProfileDataForm = ({profile,handleSubmit,error, ...restProps} : InjectedFormProps<SubmitForm, ProfileDataFormType> & ProfileDataFormType) => {
-
+ const ProfileDataForm = ({profile,handleSubmit,error} : InjectedFormProps<SubmitForm, ProfileDataFormType> & ProfileDataFormType) => {
 
     return (
         <form onSubmit={handleSubmit}>form
@@ -38,7 +37,7 @@ interface SubmitForm {
             <div> About me:
                 <Field placeholder={'About me'}
                     name={'aboutMe'}
-                    component={TextArea}
+                    component={Textarea}
                     validate={[]}
                 />
             </div>
@@ -54,7 +53,7 @@ interface SubmitForm {
                 <Field
                     placeholder={'My professional skills'}
                     name={'lookingForAJobDescription'}
-                    component={TextArea}
+                    component={Textarea}
                     validate={[]}
                 />
             </div>
@@ -70,7 +69,6 @@ interface SubmitForm {
                                    validate={[]}
                             />
                         </div>
-
                     })}
             </div>
         </form>

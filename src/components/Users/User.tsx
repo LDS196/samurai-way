@@ -2,11 +2,15 @@ import React from 'react';
 import style from "./users.module.css";
 import userPhoto from "../../assets/img/user.png";
 import {NavLink} from "react-router-dom";
-import {UserType} from "../../redux/users-reducer";
+
+import {InitialUsersStateType} from "../../redux/users-reducer";
+import {UserType} from "../api/usersAPI";
+
+;
 
 type UserPropsType = {
     user: UserType
-    followingInProgress: []
+    followingInProgress: InitialUsersStateType["followingInProgress"]
     unfollow: (id: number) => any
     follow: (id: number) => any
 

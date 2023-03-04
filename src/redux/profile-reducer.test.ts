@@ -1,6 +1,6 @@
-import profileReducer, {addPostActionCreator, deletePostActionCreator, PostStateType} from "./profile-reducer";
+import profileReducer, {addPostActionCreator, deletePostActionCreator,ProfileStateType} from "./profile-reducer";
 
-let initialState: PostStateType
+let initialState: ProfileStateType
 beforeEach(() => {
     initialState = {
         posts: [
@@ -8,7 +8,8 @@ beforeEach(() => {
             {id: 2, message: 'HI Friends', likesCount: 12},
         ],
         profile: null,
-        status: ''
+        status: '',
+        newPostText: ''
     }
 })
 

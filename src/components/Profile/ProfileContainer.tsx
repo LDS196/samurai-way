@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {
     getStatus,
     getUserProfile,
-    ProfileType,
     savePhoto,
     saveProfile,
     updateStatus
@@ -13,6 +12,8 @@ import {StateType} from "../../redux/redux-store";
 import {compose} from "redux";
 import {useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {ProfileType} from "../api/profileAPI";
+
 
 type ParamsType = {
     userId: string
@@ -65,7 +66,6 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         }
 
     }
-
 
     render() {
         return (
