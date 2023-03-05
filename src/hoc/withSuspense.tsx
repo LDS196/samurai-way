@@ -8,5 +8,4 @@ export function withSuspense(Component: ComponentType) {
             <Component/>
         </React.Suspense>
     }
-};
-
+}

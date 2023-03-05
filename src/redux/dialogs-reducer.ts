@@ -14,11 +14,11 @@ export type ActionDialogsType = AddDialogCreatorAT
 
 const initialState = {
     messages: [
-        {id: 1, message: 'How are you',},
-        {id: 2, message: 'HI Friends',},
+        {id: 1, message: 'How are you!',},
+        {id: 2, message: 'Hi Friends!',},
         {id: 3, message: 'Yo Yo!',},
-        {id: 4, message: 'How are you',},
-        {id: 5, message: 'How are you',},
+        {id: 4, message: 'Some text',},
+        {id: 5, message: 'Hello everyone!',},
 
     ] as Array<DialogMessageType>,
     dialogs: [
