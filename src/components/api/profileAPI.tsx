@@ -15,6 +15,7 @@ export type ContactsType = {
     github: string
     mainLink: string
 }
+
 export type ProfileType={
     aboutMe: string,
     contacts: ContactsType

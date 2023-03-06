@@ -1,20 +1,14 @@
 import React from "react";
-import { Field, InjectedFormProps, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input, Textarea} from "../../common/FormControls/FormsControls";
 import s from "../../common/FormControls/FormsControls.module.css";
 import {ContactsType, ProfileType} from "../../api/profileAPI";
 
-interface ProfileDataFormType{
-    profile: ProfileType
+type PropsType = {
+    profile: ProfileType| null
 }
-interface SubmitForm {
-    fullName:string
-    aboutMe:string
-    contacts: ContactsType
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string,
-}
- const ProfileDataForm = ({profile,handleSubmit,error} : InjectedFormProps<SubmitForm, ProfileDataFormType> & ProfileDataFormType) => {
+
+const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, error, profile}) => {
 
     return (
         <form onSubmit={handleSubmit}>form
@@ -32,21 +26,21 @@ interface SubmitForm {
                 />
             </div>
             <div>UserId:
-                {profile.userId}
+                {profile?.userId}
             </div>
             <div> About me:
                 <Field placeholder={'About me'}
-                    name={'aboutMe'}
-                    component={Textarea}
-                    validate={[]}
+                       name={'aboutMe'}
+                       component={Textarea}
+                       validate={[]}
                 />
             </div>
             <div>Looking for a job:
                 <Field
-                       name={'lookingForAJob'}
-                       component={Input}
-                       validate={[]}
-                       type={'checkbox'}
+                    name={'lookingForAJob'}
+                    component={Input}
+                    validate={[]}
+                    type={'checkbox'}
                 />
             </div>
             <div>Job description:
@@ -59,7 +53,7 @@ interface SubmitForm {
             </div>
             <div>
                 Contacts
-                {
+                {profile?
                     Object.keys(profile.contacts).map((key) => {
                         return <div key={key}>
                             <b>{key}</b>
@@ -69,10 +63,10 @@ interface SubmitForm {
                                    validate={[]}
                             />
                         </div>
-                    })}
+                    })
+                :<div></div>}
             </div>
         </form>
     )
 }
-const ProfileDataFormReduxForm= reduxForm<SubmitForm,ProfileDataFormType>({form: 'edit-profile'})(ProfileDataForm)
-export default ProfileDataFormReduxForm;
+export default reduxForm<ProfileType, PropsType>({form: 'edit-profile'})(ProfileDataForm)

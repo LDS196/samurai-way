@@ -9,11 +9,11 @@ import {ProfileType} from "../api/profileAPI";
 
 export type ProfilePropsType = {
     isOwner:boolean
-    profile: ProfileType | null
+    profile: ProfileType |null
     status:string
     updateStatus:(status:string)=>void
-    savePhoto: any
-    saveProfile: any
+    savePhoto: (file: File) => void
+    saveProfile: (formData: ProfileType) => Promise<any>
 }
 
 function Profile(props: ProfilePropsType) {

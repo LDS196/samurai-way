@@ -11,8 +11,8 @@ import {UserType} from "../api/usersAPI";
 type UserPropsType = {
     user: UserType
     followingInProgress: InitialUsersStateType["followingInProgress"]
-    unfollow: (id: number) => any
-    follow: (id: number) => any
+    unfollow: (id: number) => void
+    follow: (id: number) => void
 
 }
 const User = (props: UserPropsType) => {

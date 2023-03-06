@@ -22,10 +22,10 @@ type MatchType = {
     params: ParamsType
 }
 type ProfileContainerType = {
-    saveProfile: any
-    savePhoto: any
-    getStatus: (userId: number | string) => void
-    getUserProfile: (userId: number | string) => void
+    savePhoto: (file: File) => void
+    saveProfile: (formData: ProfileType) => Promise<any>
+    getStatus: (userId: number ) => void
+    getUserProfile: (userId: number) => void
     profile: ProfileType | null
     setUserProfile: (profile: ProfileType) => { type: string, profile: ProfileType }
     match: MatchType
@@ -60,7 +60,7 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         this.refreshProfile()
     }
 
-    componentDidUpdate(prevProps: Readonly<ProfileContainerType>, prevState: Readonly<{}>, snapshot?: any) {
+    componentDidUpdate(prevProps: ProfileContainerType, prevState: ProfileContainerType) {
         if (this.props.match.params.userId != prevProps.match.params.userId) {
             this.refreshProfile()
         }
