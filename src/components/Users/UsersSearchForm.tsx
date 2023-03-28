@@ -1,26 +1,29 @@
 import {Field, Form, Formik} from "formik";
 import React, {memo} from "react";
-import {FilterType} from "../../redux/users-reducer";
+import {FilterType, getUsers} from "../../redux/users-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {getPageSizeSelector} from "../../redux/users-selectors";
 
-type PropsType = {
-    onFilterChanged: (filter: FilterType) => void
-}
+type PropsType = {}
 type FormType = {
     term: string
     friend: 'true' | 'false' | 'null'
-
 }
-export const UsersSearchForm: React.FC<PropsType> = React.memo(({onFilterChanged}) => {
-    const usersSearchFormValidate = (values: any) => {
+export const UsersSearchForm: React.FC<PropsType> = memo(() => {
+    const pageSize = useSelector(getPageSizeSelector)
+    const dispatch = useDispatch()
+
+    const usersSearchFormValidate = (values: FormType) => {
         const errors = {}
         return errors
     }
+
     const submit = (values: FormType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         const filter:FilterType={
             term: values.term,
             friend: values.friend==='null'?null:values.friend==='true'? true: false
         }
-        onFilterChanged(filter)
+        dispatch(getUsers(1, pageSize, filter))
         setSubmitting(false)
     }
 

@@ -1,45 +1,38 @@
-import React from 'react';
-
+import React, {useEffect} from 'react';
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {UserType} from "../api/usersAPI";
 import {UsersSearchForm} from "./UsersSearchForm";
-import {FilterType} from "../../redux/users-reducer";
+import { getUsers} from "../../redux/users-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {getCurrentPageSelector, getPageSizeSelector,
+    getTotalUsersCountSelector, getUsersFilterSelector, getUsersSelector
+} from "../../redux/users-selectors";
 
+type UsersPropsType = {}
+const Users:React.FC<UsersPropsType> = () => {
+    const users = useSelector(getUsersSelector)
+    const totalUsersCount = useSelector(getTotalUsersCountSelector)
+    const pageSize = useSelector(getPageSizeSelector)
+    const currentPage = useSelector(getCurrentPageSelector)
+    const filter = useSelector(getUsersFilterSelector)
+    const dispatch = useDispatch()
 
-type UsersPropsType = {
-    totalUsersCount: number
-    pageSize: number
-    currentPage: number
-    onPageChanged: (pageNumber: number) => void
-    users: Array<UserType>
-    follow: (id: number) => void
-    unfollow: (id: number) => void
-    followingInProgress: Array<number>
-    onFilterChanged:(filter: FilterType)=>void
-}
-const Users = (props: UsersPropsType) => {
-
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    let pagesCount = Math.ceil(totalUsersCount / pageSize);
     let pages = []
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-    const usersForRender=props.users.map((u: UserType) => {
-        return <User key={u.id} user={u}
-              followingInProgress={props.followingInProgress}
-              unfollow={props.unfollow}
-              follow={props.follow}/>
-    })
+    const usersForRender = users.map((u: UserType) => <User key={u.id} user={u}/>)
+
+    useEffect(() => {
+        dispatch(getUsers(currentPage, pageSize, filter))
+    }, [])
+
     return (
         <div>
-            <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
-            <Paginator totalItemsCount={props.totalUsersCount}
-                       pageSize={props.pageSize}
-                       currentPage={props.currentPage}
-                       onPageChanged={props.onPageChanged}
-                       portionSize={10}
-            />
+            <UsersSearchForm/>
+            <Paginator portionSize={10}/>
             {usersForRender}
         </div>
     )

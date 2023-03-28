@@ -22,6 +22,7 @@ let reducers = combineReducers({
     app: AppReducer
 });
  let store = createStore(reducers,  composeWithDevTools(applyMiddleware(thunkMiddleware)));
+
 export type CommonThunkType<A extends Action, R =Promise<void>> = ThunkAction<R, StateType, unknown, A>
 
 export default store;
