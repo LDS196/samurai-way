@@ -12,7 +12,7 @@ export type UserType = {
     id: number
     uniqueUrlName: null | string
     photos: PhotosType
-    status: null
+    status: null | string
     followed: boolean
 }
 
