@@ -18,8 +18,9 @@ export type UserType = {
 
 
 export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10) {
-        return instance.get<getUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(currentPage: number = 1, pageSize: number = 10, term: string = '', friend: null | boolean = null) {
+        return instance.get<getUsersResponseType>
+        (`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend===null?'': `&friend=${friend}`))
             .then(res => res.data)
     },
     unfollowUser(id: number) {

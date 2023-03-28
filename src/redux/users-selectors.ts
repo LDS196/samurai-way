@@ -22,3 +22,6 @@ export const getIsFetchingSelector=(state:StateType)=>{
 export const getFollowingInProgressSelector=(state:StateType)=>{
     return state.usersPage.followingInProgress
 }
+export const getUsersFilterSelector=(state:StateType)=>{
+    return state.usersPage.filter
+}
