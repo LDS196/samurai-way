@@ -3,14 +3,23 @@ import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {UserType} from "../api/usersAPI";
 import {UsersSearchForm} from "./UsersSearchForm";
-import { getUsers} from "../../redux/users-reducer";
+import {getUsers} from "../../redux/users-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {getCurrentPageSelector, getPageSizeSelector,
+import {
+    getCurrentPageSelector, getPageSizeSelector,
     getTotalUsersCountSelector, getUsersFilterSelector, getUsersSelector
 } from "../../redux/users-selectors";
+import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
+
 
 type UsersPropsType = {}
-const Users:React.FC<UsersPropsType> = () => {
+type QueryParamsType = {
+    term?: string
+    friend?: string
+    currentPage?: string
+}
+
+const Users: React.FC<UsersPropsType> = () => {
     const users = useSelector(getUsersSelector)
     const totalUsersCount = useSelector(getTotalUsersCountSelector)
     const pageSize = useSelector(getPageSizeSelector)
@@ -24,11 +33,28 @@ const Users:React.FC<UsersPropsType> = () => {
         pages.push(i)
     }
     const usersForRender = users.map((u: UserType) => <User key={u.id} user={u}/>)
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
-        dispatch(getUsers(currentPage, pageSize, filter))
+        let actualPage = currentPage
+        let actualFilter = filter
+        if (!!searchParams.get('page')) actualPage = Number(searchParams.get('page'))
+        if (!!searchParams.get('term')) actualFilter = {...actualFilter, term: searchParams.get('term') as string}
+        if (!!searchParams.get('friend')) actualFilter = {
+            ...actualFilter,
+            friend: (searchParams.get('friend') === 'null' ? null : searchParams.get('friend') === 'true')
+        }
+        dispatch(getUsers(actualPage, pageSize, actualFilter))
     }, [])
 
+    useEffect(() => {
+        const query: QueryParamsType = {}
+        if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.currentPage = String(currentPage)
+
+        setSearchParams(query)
+    }, [filter, currentPage])
     return (
         <div>
             <UsersSearchForm/>

@@ -6,22 +6,28 @@ function Navbar(props: any) {
     return (
         <nav className={s.nav}>
             <div>
-                <NavLink className={s.item} activeClassName={s.activeLink} to="/Profile">Profile</NavLink>
+                <NavLink className={({isActive})=>isActive? s.item + ' ' + s.activeLink:s.item}
+                         to="/Profile">Profile</NavLink>
             </div>
             <div>
-                <NavLink className={s.item} activeClassName={s.activeLink} to="/Dialogs">Messages</NavLink>
+                <NavLink className={({isActive})=>isActive? s.item + ' ' + s.activeLink:s.item}
+                         to="/Dialogs">Messages</NavLink>
             </div>
             <div>
-                <NavLink className={s.item} activeClassName={s.activeLink} to="/News">News</NavLink>
+                <NavLink className={({isActive})=>isActive? s.item + ' ' + s.activeLink:s.item}
+                         to="/News">News</NavLink>
             </div>
             <div>
-                <NavLink className={s.item} activeClassName={s.activeLink} to="/Music">Music</NavLink>
+                <NavLink className={({isActive})=>isActive? s.item + ' ' + s.activeLink:s.item}
+                         to="/Music">Music</NavLink>
             </div>
             <div>
-                <NavLink className={s.item} activeClassName={s.activeLink} to="/Settings">Settings</NavLink>
+                <NavLink className={({isActive})=>isActive? s.item + ' ' + s.activeLink:s.item}
+                         to="/Settings">Settings</NavLink>
             </div>
             <div>
-                <NavLink className={s.item} activeClassName={s.activeLink} to="/Users">Users</NavLink>
+                <NavLink className={({isActive})=>isActive? s.item + ' ' + s.activeLink:s.item}
+                         to="/Users">Users</NavLink>
             </div>
         </nav>
     )

@@ -4,10 +4,9 @@ import Navbar from "./components/Navbar/Navbar";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
-import {Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {Navigate, Route, Routes,} from "react-router-dom";
 import  {UsersPage} from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/App-reducer";
@@ -15,6 +14,7 @@ import { StateType} from "./redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
 import {Login} from "./components/Login/Login";
+import 'antd/dist/antd.css';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
@@ -42,17 +42,17 @@ class App extends React.Component<AppType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Switch>
-                        <Route exact path={'/'} render={() => <Redirect to={'/profile'}/>}/>
-                        <Route path='/dialogs' render={()=> <SuspendedDialogs/>}/>
-                        <Route path='/profile/:userId?' render={()=><SuspendedProfile/>}/>
-                        <Route path='/news' component={News}/>
-                        <Route path='/music' component={Music}/>
-                        <Route path='/settings' component={Settings}/>
-                        <Route path='/users' render={() => <UsersPage/>}/>
-                        <Route path='/login' render={() => <Login/>}/>
-                        <Route path='*' render={() => <div>404 Not Found</div>}/>
-                    </Switch>
+                    <Routes>
+                        <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
+                        <Route path='/dialogs' element={<SuspendedDialogs/>}/>
+                        <Route path='/profile/:userId?' element={<SuspendedProfile/>}/>
+                        <Route path='/news' element={<News/>}/>
+                        <Route path='/music' element={<Music/>}/>
+                        <Route path='/settings'element={<Settings/>}/>
+                        <Route path='/users' element={<UsersPage/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                        <Route path='*' element={<div>404 Not Found</div>}/>
+                    </Routes>
                 </div>
             </div>
         );
@@ -63,5 +63,5 @@ const mapStateToProps = (state: StateType) => ({initialized: state.app.initializ
 
 
 export default compose<React.ComponentType>(
-    withRouter,
+    // withRouter,
     connect(mapStateToProps, {initializeApp}))(App);

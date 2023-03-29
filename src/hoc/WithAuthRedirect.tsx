@@ -1,5 +1,5 @@
 import React, {Component, ComponentType} from 'react';
-import {Redirect} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {StateType} from "../redux/redux-store";
 import {connect} from "react-redux";
 
@@ -16,7 +16,7 @@ export function WithAuthRedirect<T>(Component: ComponentType<T>) {
 
     const RedirectComponent: React.FC<MapStateToProps & DispatchPropsType> = (props)=> {
         let {isAuth, ...restProps} = props
-        if (!isAuth) return <Redirect to={'/login'}/>
+        if (!isAuth) return <Navigate to={'/login'}/>
         return <Component{...restProps as T}/>
     }
     return connect(mapStateToPropsForRedirect)(RedirectComponent)

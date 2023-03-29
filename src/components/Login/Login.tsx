@@ -4,9 +4,10 @@ import {Input} from "../common/FormControls/FormsControls";
 import {required} from "../../utils/validators/validators";
 import { useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/Auth-reducer";
-import {Redirect} from "react-router-dom";
+// import {Redirect} from "react-router-dom";
 import {StateType} from "../../redux/redux-store";
 import s from '../common/FormControls/FormsControls.module.css'
+import {Navigate} from "react-router-dom";
 
 type FormDataType = {
     email: string
@@ -64,7 +65,7 @@ export const Login: React.FC = () => {
         dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
-    if (isAuth) {return <Redirect to={'/profile'}/>}
+    if (isAuth) {return <Navigate to={'/profile'}/>}
     return (
         <div>
             <h1>Login</h1>

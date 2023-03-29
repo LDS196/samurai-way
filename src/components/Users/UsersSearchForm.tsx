@@ -2,16 +2,18 @@ import {Field, Form, Formik} from "formik";
 import React, {memo} from "react";
 import {FilterType, getUsers} from "../../redux/users-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {getPageSizeSelector} from "../../redux/users-selectors";
+import {getPageSizeSelector, getUsersFilterSelector} from "../../redux/users-selectors";
 
 type PropsType = {}
+type Friend = 'true' | 'false' | 'null';
 type FormType = {
     term: string
-    friend: 'true' | 'false' | 'null'
+    friend: Friend
 }
 export const UsersSearchForm: React.FC<PropsType> = memo(() => {
     const pageSize = useSelector(getPageSizeSelector)
     const dispatch = useDispatch()
+    const filter = useSelector(getUsersFilterSelector)
 
     const usersSearchFormValidate = (values: FormType) => {
         const errors = {}
@@ -30,13 +32,14 @@ export const UsersSearchForm: React.FC<PropsType> = memo(() => {
     return (
         <div>
             <Formik
-                initialValues={{term: '', friend: 'null'}}
+                enableReinitialize
+                initialValues={{term: filter.term, friend: String(filter.friend) as Friend}}
                 validate={usersSearchFormValidate}
                 onSubmit={submit}
             >
                 {({isSubmitting}) => (
                     <Form>
-                        <Field type="text" name="term"/>
+                        <Field type="text" name="term" />
                         <Field name="friend" as="select">
                             <option value="null">All</option>
                             <option value="true">Only follow</option>
