@@ -41,7 +41,8 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
             <div className={s.wrapper}>
                 <img style={{width: '150px'}} src={props.profile.photos.large || userPhoto} alt=""/>
                 <div>
-                    {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+                    <label htmlFor='avatar'>Select a file: </label>
+                    {props.isOwner && <input id={'avatar'} type={'file'} onChange={onMainPhotoSelected}/>}
                 </div>
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                 {editMode

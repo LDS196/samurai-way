@@ -1,4 +1,6 @@
 import React, {ChangeEvent, useEffect, useState,} from 'react';
+import Input from "antd/lib/input/Input";
+
 
 type ProfileStatusType = {
     status: string
@@ -26,10 +28,11 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({status, updateStat
             {
                 editMode
                     ? <div>
-                        <input onChange={onStatusChange} value={tempStatus} onBlur={deactivateEditMode}
-                               autoFocus={true}></input>
+                        <Input onChange={onStatusChange} value={tempStatus} onBlur={deactivateEditMode}
+                               autoFocus={true}></Input>
                     </div>
-                    : <div>My status:
+                    : <div>
+                        <span >My status:</span>
                         <span onDoubleClick={activateEditMode}>{tempStatus || 'No status'}</span>
                     </div>
             }
