@@ -7,11 +7,11 @@ import {
     savePhoto,
     saveProfile,
     updateStatus
-} from "../../redux/profile-reducer";
-import {StateType} from "../../redux/redux-store";
+} from "redux/profile-reducer";
+import {StateType} from "redux/redux-store";
 import {compose} from "redux";
 import {useParams} from "react-router-dom";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {WithAuthRedirect} from "hoc/WithAuthRedirect";
 import {ProfileType} from "../api/profileAPI";
 
 
@@ -64,7 +64,6 @@ class ProfileContainer extends React.Component<ProfileContainerType> {
         if (this.props.match.params.userId != prevProps.match.params.userId) {
             this.refreshProfile()
         }
-
     }
 
     render() {

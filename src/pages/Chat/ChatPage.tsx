@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {sendMessage, startMessagesListening, stopMessagesListening} from "redux/chat-reducer";
 import {StateType} from "redux/redux-store";
 import TextArea from "antd/es/input/TextArea";
-
+import {Navigate} from "react-router-dom";
 
 export const ChatPage: React.FC = () => {
     return (
@@ -17,18 +17,18 @@ export const ChatPage: React.FC = () => {
 };
 
 const Chat = () => {
-
     const dispatch = useDispatch()
     const status = useSelector((state: StateType) => state.chat.status)
+    const isAuth = useSelector((state: StateType) => state.auth.isAuth)
 
     useEffect(() => {
         dispatch(startMessagesListening())
         return () => {
             dispatch(stopMessagesListening())
         }
-
     }, [])
 
+    if (!isAuth) return <Navigate to={'/login'}/>
     return <div>
         {status === 'error'
             ? <div>Some error</div>
@@ -42,7 +42,7 @@ const Chat = () => {
 }
 
 
-const Messages= () => {
+const Messages = () => {
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
 
     const messages = useSelector((state: StateType) => state.chat.messages)
@@ -64,7 +64,7 @@ const Messages= () => {
 
     }, [messages])
 
-    return <div style={{height: '400px', overflow: 'auto'}} onScroll={onScrollHandler}>
+    return <div style={{height: '600px', overflow: 'auto'}} onScroll={onScrollHandler}>
 
         {!!messages && messages.map((m) => <Message key={m.id} message={m}/>)}
         <div ref={messagesAnchorRef}></div>
@@ -77,24 +77,21 @@ const AddMessageForm = () => {
     const dispatch = useDispatch()
     const [message, setMessage] = useState('')
 
-
     const sendMessageHandler = () => {
-
         if (!message) return
         dispatch(sendMessage(message))
-
         setMessage('')
     }
     return (
         <div>
             <div>
                 <TextArea size={"small"} placeholder="Message"
-                          style={{marginTop:'10px',maxWidth:'400px'}}
+                          style={{marginTop: '10px', maxWidth: '400px'}}
                           onChange={(e) => setMessage(e.currentTarget.value)}
                           value={message}
                 />
             </div>
-            <div style={{marginTop:'10px'}}>
+            <div style={{marginTop: '10px'}}>
 
                 <Button type="primary" disabled={status !== 'ready'} onClick={sendMessageHandler}>Send</Button>
             </div>
@@ -110,7 +107,6 @@ const Message: React.FC<{ message: ChatMessageType }> = memo(({message}) => {
                 <span>UserID: {message.userId}</span>
                 <span>UserName: {message.userName}</span>
             </div>
-
             <p>{message.message}</p>
             <hr/>
         </div>

@@ -1,7 +1,7 @@
 import {stopSubmit} from "redux-form";
-import {securityAPI} from "../components/api/securityAPI";
-import {authAPI} from "../components/api/authAPI";
-import {ResultCode} from "../types/types";
+import {securityAPI} from "components/api/securityAPI";
+import {authAPI} from "components/api/authAPI";
+import {ResultCode} from "types/types";
 import {CommonThunkType} from "./redux-store";
 
 const SET_USERS_DATA: string = "auth-reducer/SET_USERS_DATA";
@@ -67,6 +67,7 @@ export const login = (email: string, password: string,
         }
 }
 export const logout = ():ThunkType => async (dispatch) => {
+
     const data = await authAPI.logout()
         if (data.resultCode === ResultCode.Success) {
             dispatch(setAuthUserData(null, null, null, false))

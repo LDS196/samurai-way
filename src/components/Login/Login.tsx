@@ -1,13 +1,14 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../common/FormControls/FormsControls";
-import {required} from "../../utils/validators/validators";
-import { useDispatch, useSelector} from "react-redux";
-import {login} from "../../redux/Auth-reducer";
-// import {Redirect} from "react-router-dom";
-import {StateType} from "../../redux/redux-store";
+import {MyInput} from "../common/FormControls/FormsControls";
+import {required} from "utils/validators/validators";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "redux/Auth-reducer";
+
+import {StateType} from "redux/redux-store";
 import s from '../common/FormControls/FormsControls.module.css'
 import {Navigate} from "react-router-dom";
+import {Button,} from "antd";
 
 type FormDataType = {
     email: string
@@ -23,34 +24,38 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
             <div>
                 <Field placeholder={'Email'}
                        name={'email'}
-                       component={Input}
+                       component={MyInput}
                        validate={[required]}
+
                 />
             </div>
             <div>
                 <Field placeholder={'Password'}
                        type={'password'}
                        name={'password'}
-                       component={Input}
+                       component={MyInput}
                        validate={[required]}/>
             </div>
             <div>
-                <Field type={"checkbox"}
-                       name={'rememberMe'}
-                       component={Input}/>remember me
+
+                <Field
+                    type={"checkbox"}
+                    name={'rememberMe'}
+                    component={MyInput}/>
+
             </div>
             <div>
                 {captchaUrl && <img src={captchaUrl} alt="captcha"/>}
                 {captchaUrl &&
                     <Field placeholder={'Enter symbols from image'}
                            name={'captcha'}
-                           component={Input}
+                           component={MyInput}
                            validate={[required]}
                     />}
                 {error && <div className={s.formSummaryError}>{error}</div>}
             </div>
             <div>
-                <button>login</button>
+                <Button type={"primary"} htmlType={'submit'}>login</Button>
             </div>
         </form>
     );
@@ -65,7 +70,9 @@ export const Login: React.FC = () => {
         dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
-    if (isAuth) {return <Navigate to={'/profile'}/>}
+    if (isAuth) {
+        return <Navigate to={'/profile'}/>
+    }
     return (
         <div>
             <h1>Login</h1>

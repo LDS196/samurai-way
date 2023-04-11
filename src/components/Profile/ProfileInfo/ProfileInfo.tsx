@@ -3,10 +3,11 @@ import s from './ProfileInfo.module.css'
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "../ProfileStatusWithHooks";
 import userPhoto from "../../../assets/img/user.png";
-
 import {ProfileType} from "../../api/profileAPI";
 import ProfileData from "./ProfileData";
 import ProfileDataForm from "./ProfileDataForm";
+
+
 
 
 export type ProfileInfoPropsType = {
@@ -36,13 +37,14 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
             })
     }
 
-    return (
+   return (
         <div>
             <div className={s.wrapper}>
-                <img style={{width: '150px'}} src={props.profile.photos.large || userPhoto} alt=""/>
-                <div>
-                    <label htmlFor='avatar'>Select a file: </label>
+                <img style={{width: '150px', borderRadius:'50%'}} src={props.profile.photos.large || userPhoto} alt=""/>
+                <div style={{display:'flex',gap:'0 5px', margin:'5px 0'}}>
+                    <label htmlFor='avatar'>Change Avatar : </label>
                     {props.isOwner && <input id={'avatar'} type={'file'} onChange={onMainPhotoSelected}/>}
+
                 </div>
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
                 {editMode
@@ -62,6 +64,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
 
     )
 }
+
 
 
 export default ProfileInfo;

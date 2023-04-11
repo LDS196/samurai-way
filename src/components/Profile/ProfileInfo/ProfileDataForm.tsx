@@ -1,8 +1,9 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input, Textarea} from "../../common/FormControls/FormsControls";
+import { MyInput, Textarea} from "../../common/FormControls/FormsControls";
 import s from "../../common/FormControls/FormsControls.module.css";
-import {ContactsType, ProfileType} from "../../api/profileAPI";
+import { ProfileType} from "../../api/profileAPI";
+import {Button} from "antd";
 
 type PropsType = {
     profile: ProfileType| null
@@ -11,9 +12,9 @@ type PropsType = {
 const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, error, profile}) => {
 
     return (
-        <form onSubmit={handleSubmit}>form
+        <form onSubmit={handleSubmit}>
             <div>
-                <button>save</button>
+                <Button size={"small"} htmlType={'submit'} type={"primary"}>Save Profile</Button>
             </div>
             <div>
                 {error && <div className={s.formSummaryError}>{error}</div>}
@@ -21,7 +22,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
             <div>Full name:
                 <Field placeholder={'Full name'}
                        name={'fullName'}
-                       component={Input}
+                       component={MyInput}
                        validate={[]}
                 />
             </div>
@@ -38,7 +39,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
             <div>Looking for a job:
                 <Field
                     name={'lookingForAJob'}
-                    component={Input}
+                    component={MyInput}
                     validate={[]}
                     type={'checkbox'}
                 />
@@ -59,7 +60,7 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
                             <b>{key}</b>
                             <Field placeholder={key}
                                    name={'contacts.' + key}
-                                   component={Input}
+                                   component={MyInput}
                                    validate={[]}
                             />
                         </div>

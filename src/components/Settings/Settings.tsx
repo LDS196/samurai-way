@@ -1,11 +1,8 @@
 import React from 'react';
-import s from './Settings.module.css';
-
-
 
 const Settings = () => {
     return (
-        <div>Settings</div>
+        <div>In Progress</div>
     )
 }
 export default Settings;

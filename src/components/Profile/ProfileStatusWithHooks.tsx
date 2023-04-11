@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useEffect, useState,} from 'react';
 import Input from "antd/lib/input/Input";
+import {EditOutlined} from "@ant-design/icons";
 
 
 type ProfileStatusType = {
@@ -30,10 +31,12 @@ const ProfileStatusWithHooks: React.FC<ProfileStatusType> = ({status, updateStat
                     ? <div>
                         <Input onChange={onStatusChange} value={tempStatus} onBlur={deactivateEditMode}
                                autoFocus={true}></Input>
+
                     </div>
-                    : <div>
+                    : <div style={{display:'flex', gap:'0 10px', fontWeight:'500',fontSize:'16px'}}>
                         <span >My status:</span>
                         <span onDoubleClick={activateEditMode}>{tempStatus || 'No status'}</span>
+                        <EditOutlined onClick={activateEditMode} />
                     </div>
             }
         </div>

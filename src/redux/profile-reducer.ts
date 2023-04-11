@@ -1,10 +1,8 @@
 import {stopSubmit} from "redux-form";
-import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
-import {CommonThunkType, StateType} from "./redux-store";
-import {usersAPI} from "../components/api/usersAPI";
-import {PhotosType, profileAPI, ProfileType} from "../components/api/profileAPI";
-import {ResultCode} from "../types/types";
+import {CommonThunkType,} from "./redux-store";
+import {usersAPI} from "components/api/usersAPI";
+import {PhotosType, profileAPI, ProfileType} from "components/api/profileAPI";
+import {ResultCode} from "types/types";
 
 const DELETE_POST = "profile-reducer/DELETE_POST"
 const ADD_POST = 'profile-reducer/ADD-POST';

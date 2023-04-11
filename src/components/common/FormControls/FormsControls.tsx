@@ -36,7 +36,8 @@
 
 import React, {HTMLInputTypeAttribute} from 'react'
 import {WrappedFieldInputProps, WrappedFieldMetaProps} from 'redux-form/lib/Field'
-
+import TextArea from "antd/es/input/TextArea";
+import { Input} from "antd";
 type FormsControls = {
     input: WrappedFieldInputProps
     meta: WrappedFieldMetaProps
@@ -45,11 +46,14 @@ type FormsControls = {
     autoFocus?: boolean
 }
 
-export const Input: React.FC<FormsControls> = (
+ export const MyInput: React.FC<FormsControls> = (
     {input, meta: {touched, error}, type, placeholder, autoFocus}) => {
     return (
         <div>
-            <input {...input} type={type} placeholder={placeholder} autoFocus={autoFocus}/>
+
+            <Input style={type !== 'checkbox'?{maxWidth:'300px',margin:'5px'}:{maxWidth:'20px',margin:'5px'}}
+                   {...input} type={type} placeholder={placeholder} autoFocus={autoFocus}/>
+            {type === 'checkbox' && <label>remember me</label>}
             {touched && error && <span>{error}</span>}
         </div>
     )
@@ -59,7 +63,7 @@ export const Textarea: React.FC<FormsControls> = (
     {input, meta: {touched, error}, placeholder}) => {
     return (
         <div>
-            <textarea {...input} placeholder={placeholder}/>
+            <TextArea {...input} placeholder={placeholder} style={{maxWidth:'400px'}}/>
             {touched && error && <span>{error}</span>}
         </div>
     )
