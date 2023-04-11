@@ -1,8 +1,10 @@
 import {Field, Form, Formik} from "formik";
-import React, {memo} from "react";
-import {FilterType, getUsers} from "../../redux/users-reducer";
+import React, {memo, useState} from "react";
+import {FilterType, getUsers} from "redux/users-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {getPageSizeSelector, getUsersFilterSelector} from "../../redux/users-selectors";
+import {getPageSizeSelector, getUsersFilterSelector} from "redux/users-selectors";
+import {Button, Input, Select,} from "antd";
+import {SearchOutlined} from '@ant-design/icons';
 
 type PropsType = {}
 type Friend = 'true' | 'false' | 'null';
@@ -11,6 +13,7 @@ type FormType = {
     friend: Friend
 }
 export const UsersSearchForm: React.FC<PropsType> = memo(() => {
+    const [friend, setFriend] = useState<any>(useSelector(getUsersFilterSelector).friend)
     const pageSize = useSelector(getPageSizeSelector)
     const dispatch = useDispatch()
     const filter = useSelector(getUsersFilterSelector)
@@ -21,14 +24,16 @@ export const UsersSearchForm: React.FC<PropsType> = memo(() => {
     }
 
     const submit = (values: FormType, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
-        const filter:FilterType={
+        const filter: FilterType = {
             term: values.term,
-            friend: values.friend==='null'?null:values.friend==='true'? true: false
+            friend: friend === 'null' ? null : friend === 'true' ? true : false
         }
         dispatch(getUsers(1, pageSize, filter))
         setSubmitting(false)
     }
-
+    const handleChange = (value: string) => {
+        setFriend(value)
+    };
     return (
         <div>
             <Formik
@@ -38,19 +43,32 @@ export const UsersSearchForm: React.FC<PropsType> = memo(() => {
                 onSubmit={submit}
             >
                 {({isSubmitting}) => (
-                    <Form>
-                        <Field type="text" name="term" />
-                        <Field name="friend" as="select">
-                            <option value="null">All</option>
-                            <option value="true">Only follow</option>
-                            <option value="false">Only unfollow</option>
-                        </Field>
-                        <button type="submit" disabled={isSubmitting}>
+                    <Form >
+                        <Field style={{maxWidth:'300px',margin:'5px'}} as={Input} name="term"
+                               placeholder="Enter User name"/>
+                        <Select
+                            defaultValue={String(filter.friend)}
+                            style={{minWidth:'110px',margin:'5px'}}
+                            onChange={handleChange}
+                            options={[
+                                {value: 'null', label: 'All'},
+                                {value: 'true', label: 'Only follow'},
+                                {value: 'false', label: 'Only unfollow'},
+                            ]}
+                        />
+
+                        <Button style={{margin:'5px'}}
+                            icon={<SearchOutlined/>}
+                            size={"middle"}
+                            type={"primary"}
+                            htmlType="submit"
+                            disabled={isSubmitting}>
                             Find
-                        </button>
+                        </Button>
                     </Form>
                 )}
             </Formik>
         </div>
     )
 })
+

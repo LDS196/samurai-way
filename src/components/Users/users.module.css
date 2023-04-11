@@ -3,3 +3,17 @@
     height: 50px;
     border-radius: 50%;
 }
+.userContainer{
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    gap: 0 40px;
+    margin: 20px 0px;
+    border: lightblue 1px solid;
+}
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px 0;
+    font-weight: 500;
+}

@@ -1,10 +1,11 @@
 import React, {memo, useEffect, useRef, useState} from "react";
-import {Avatar} from "antd";
-import s from "components/Header/Header.module.css";
+import {Avatar, Button} from "antd";
+import style from "../Chat/ChatPage.module.css";
 import {ChatMessageType} from "components/api/chat-api";
 import {useDispatch, useSelector} from "react-redux";
 import {sendMessage, startMessagesListening, stopMessagesListening} from "redux/chat-reducer";
 import {StateType} from "redux/redux-store";
+import TextArea from "antd/es/input/TextArea";
 
 
 export const ChatPage: React.FC = () => {
@@ -62,6 +63,7 @@ const Messages= () => {
         }
 
     }, [messages])
+
     return <div style={{height: '400px', overflow: 'auto'}} onScroll={onScrollHandler}>
 
         {!!messages && messages.map((m) => <Message key={m.id} message={m}/>)}
@@ -86,22 +88,29 @@ const AddMessageForm = () => {
     return (
         <div>
             <div>
-                <textarea onChange={(e) => setMessage(e.currentTarget.value)} value={message}></textarea>
+                <TextArea size={"small"} placeholder="Message"
+                          style={{marginTop:'10px',maxWidth:'400px'}}
+                          onChange={(e) => setMessage(e.currentTarget.value)}
+                          value={message}
+                />
             </div>
-            <div>
-                <button disabled={status !== 'ready'} onClick={sendMessageHandler}> send</button>
+            <div style={{marginTop:'10px'}}>
+
+                <Button type="primary" disabled={status !== 'ready'} onClick={sendMessageHandler}>Send</Button>
             </div>
         </div>
     );
 };
 
 const Message: React.FC<{ message: ChatMessageType }> = memo(({message}) => {
-    console.log('m')
     return (
         <div>
-            <Avatar className={s.userFoto} src={message.photo}/>
-            <span>{message.userId}</span>
-            <span>{message.userName}</span>
+            <div className={style.userInfo}>
+                <Avatar src={message.photo}/>
+                <span>UserID: {message.userId}</span>
+                <span>UserName: {message.userName}</span>
+            </div>
+
             <p>{message.message}</p>
             <hr/>
         </div>

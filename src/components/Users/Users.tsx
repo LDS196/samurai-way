@@ -3,13 +3,13 @@ import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {UserType} from "../api/usersAPI";
 import {UsersSearchForm} from "./UsersSearchForm";
-import {getUsers} from "../../redux/users-reducer";
+import {getUsers} from "redux/users-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getCurrentPageSelector, getPageSizeSelector,
     getTotalUsersCountSelector, getUsersFilterSelector, getUsersSelector
-} from "../../redux/users-selectors";
-import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
+} from "redux/users-selectors";
+import {useSearchParams} from "react-router-dom";
 
 
 type UsersPropsType = {}
@@ -57,9 +57,10 @@ const Users: React.FC<UsersPropsType> = () => {
     }, [filter, currentPage])
     return (
         <div>
-            <UsersSearchForm/>
             <Paginator portionSize={10}/>
+            <UsersSearchForm/>
             {usersForRender}
+            <Paginator portionSize={10}/>
         </div>
     )
 };

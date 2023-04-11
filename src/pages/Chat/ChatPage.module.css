@@ -1,0 +1,5 @@
+.userInfo{
+    display: flex;
+    gap: 0 20px;
+    font-weight: 500;
+}
