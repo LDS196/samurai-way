@@ -1,11 +1,16 @@
 import React from 'react';
-import preloader from "../../../assets/img/preloader.svg";
+import { Spin} from "antd";
 
-const Preloader:React.FC = () => {
+const Preloader: React.FC = () => {
     return (
-        <div>
-            <img src={preloader}/>
-        </div>
+
+        <Spin size={"large"}
+              style={{
+                  position: 'absolute',
+                  left: '50%',
+                  top: '50%',
+              }}/>
+
     );
 };
 
