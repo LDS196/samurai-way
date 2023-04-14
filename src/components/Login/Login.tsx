@@ -77,6 +77,7 @@ export const Login: React.FC = () => {
         <div>
             <h1>Login</h1>
             <LoginReduxForm onSubmit={onSubmit}/>
+            <p>Email: free@samuraijs.com Password: free</p>
         </div>
     );
 };
