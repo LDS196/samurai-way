@@ -48,34 +48,11 @@ export const App: React.FC<AppType> = () => {
 
     return (
         <MyLayout/>
-        // <div className="app-wrapper">
-        //     <Header/>
-        //     {/*<Navbar/>*/}
-        //     <div className="app-wrapper-content">
-        //         <Routes>
-        //             <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-        //             <Route path='/dialogs' element={<SuspendedDialogs/>}/>
-        //             <Route path='/profile/:userId?' element={<SuspendedProfile/>}/>
-        //             <Route path='/news' element={<News/>}/>
-        //             <Route path='/music' element={<Music/>}/>
-        //             <Route path='/settings' element={<Settings/>}/>
-        //             <Route path='/users' element={<UsersPage/>}/>
-        //             <Route path='/login' element={<Login/>}/>
-        //             <Route path='/chat' element={<SuspendedChatPage/>}/>
-        //             <Route path='*' element={<div>404 Not Found</div>}/>
-        //         </Routes>
-        //     </div>
-        //
-        // </div>
+
     );
 
 }
 
-
-// const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-//     key,
-//     label: `nav ${key}`,
-// }));
 
 const items2: MenuProps['items'] = [UserOutlined].map(
     (icon, index) => {
