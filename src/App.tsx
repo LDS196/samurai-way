@@ -6,14 +6,6 @@ import {StateType} from "redux/redux-store";
 import Preloader from "./components/common/Preloader/Preloader";
 import './index.css';
 import {MainPage} from "components/MainPage/MainPage";
-
-
-
-
-
-
-
-
 type AppType = {}
 
 export const App: React.FC<AppType> = () => {
