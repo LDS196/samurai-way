@@ -1,0 +1,12 @@
+
+
+.dialogs__item{
+
+}
+.active{
+    color:gold;
+}
+.dialogs__link{
+    text-decoration: none;
+    color: white;
+}
